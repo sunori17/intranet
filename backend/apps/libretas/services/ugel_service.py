@@ -16,7 +16,7 @@ def leer_base(upload_id: str) -> tuple[str, str, list[str]]:
     info = _leer_base_info(upload_id)
     return (str(info.path), info.filename, list(info.sheetnames))
 
-def construir_consolidado(upload_id: str, grado: str, curso: str) -> List[dict]:
+def construir_consolidado(upload_id: str, grado: str, curso: str | None = None) -> List[dict]:
     """
     Lee el archivo y arma el consolidado filtrando por hoja 'grado'
     (si no existe, usa la primera). Filtra por 'curso' si está en hoja.

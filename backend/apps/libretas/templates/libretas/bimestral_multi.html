@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{{ titulo }}</title>
+<style>
+  /* Mantiene los estilos comunes; para brevedad reutilizamos los estilos de bimestral_template */
+  @page{ size:A4; margin:16mm; }
+  body{ margin:0; padding:0; font:12px/1.35 "Inter",system-ui,Segoe UI,Arial,sans-serif; color:#111; }
+  .sheet{ background:#fff; width:210mm; min-height:297mm; margin:0 auto; padding:14mm 12mm; box-sizing:border-box; border:3px solid #e16d2b; }
+  .header{display:grid;grid-template-columns:72px 1fr;align-items:center;column-gap:12px}
+  .title{text-align:center;margin:8px 0 10px;font-size:18px;font-weight:900}
+  table{width:100%;border-collapse:collapse}
+  thead th, tbody td{border:1px solid #000;padding:5px}
+  .area{font-weight:800;background:#fafafa}
+  .center{text-align:center}
+  .promg{background:#fff9ed;font-weight:800}
+</style>
+</head>
+<body>
+  {% for consolidado in consolidados %}
+  <section class="sheet">
+    <div class="header">
+      <img src="{{ logo_url|default:'/static/libretas/img/logo.png' }}" alt="Escudo IEP" style="width:72px;height:72px;object-fit:contain" />
+      <div style="text-align:center">
+        <h2 style="margin:0">Institución Educativa Privada</h2>
+        <h3 style="margin:2px 0 0">BOLETA DE NOTAS</h3>
+      </div>
+    </div>
+    <div class="title">{{ titulo }}</div>
+    <div style="display:flex;gap:10px;margin-bottom:10px">
+      <div style="flex:1;border:1px solid #000;padding:6px"><div style="font-weight:700">APELLIDOS Y NOMBRES</div><div style="font-weight:700">{{ consolidado.alumno_nombre }}</div></div>
+      <div style="width:120px;border:1px solid #000;padding:6px"><div style="font-weight:700">GRADO</div><div style="font-weight:700">{{ grado }}</div></div>
+      <div style="width:120px;border:1px solid #000;padding:6px"><div style="font-weight:700">BIMESTRE</div><div style="font-weight:700">{{ bimestre }}</div></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>ÁREA</th><th>ASIGNATURA</th><th>NOTAS</th><th>PROMEDIO</th><th>LETRA</th></tr>
+      </thead>
+      <tbody>
+      {% for asign in consolidado.asignaturas %}
+        <tr>
+          <th class="area">{{ asign.area }}</th>
+          <td>{{ asign.nombre }}</td>
+          <td class="center">{% for n in asign.notas %}{{ n }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+          <td class="center">{{ asign.promedio }}</td>
+          <td class="center promg">{{ asign.letra }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px;display:flex;gap:10px">
+      <div style="flex:1;border:1px solid #000;padding:6px">RECOMENDACIONES<br>{{ consolidado.recomendaciones }}</div>
+      <div style="width:200px;border:1px solid #000;padding:6px">PROMEDIO FINAL<br><div style="font-size:20px;font-weight:900">{{ consolidado.promedio_general }}</div></div>
+      <div style="width:200px;border:1px solid #000;padding:6px">CUALITATIVO<br><div style="font-size:20px;font-weight:900">{{ consolidado.letra_general }}</div></div>
+    </div>
+
+  </section>
+  {% endfor %}
+</body>
+</html>

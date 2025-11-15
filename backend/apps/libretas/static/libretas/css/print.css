@@ -1,4 +1,150 @@
-/* Placeholder S1: estilos de impresión */
-@page { size: A4; margin: 12mm; }
-table { border-collapse: collapse; width: 100%; }
-th, td { border: 1px solid #999; padding: 4px; }
+/* ===== S1: Estilos de impresión para libretas A4 ===== */
+
+@page {
+  size: A4 portrait;
+  margin: 12mm 18mm 18mm 18mm;  /* arriba, der, abajo, izq */
+}
+
+/* Reset suave para impresión */
+* {
+  box-sizing: border-box;
+}
+
+/* Tipografía y colores base (institucional) */
+body {
+  font-family: "Arial", sans-serif;
+  font-size: 11px;
+  color: #222;
+  line-height: 1.35;
+}
+
+/* Títulos principales de la boleta/libreta */
+h1, .titulo-principal {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+}
+
+h2, .subtitulo {
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 8px 0;
+}
+
+/* Bloque de cabecera del colegio/alumno */
+.header-libreta {
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-libreta .fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.header-libreta .etiqueta {
+  font-weight: bold;
+}
+
+/* Pie de página (firmas, sellos) */
+.footer-libreta {
+  margin-top: 14mm;
+  font-size: 10px;
+}
+
+.footer-libreta .firmas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.footer-libreta .firma {
+  text-align: center;
+  width: 32%;
+  border-top: 1px solid #999;
+  padding-top: 4px;
+}
+
+/* ===== Tablas generales ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 10px;
+}
+
+/* Cabecera de tablas (notas, áreas, etc.) */
+th {
+  padding: 4px 6px;
+  border-bottom: 1px solid #c8c8c8;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: #f5f5f5;              /* fondo suave */
+  color: #333;
+}
+
+/* Celdas normales */
+td {
+  padding: 3px 6px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+/* Primera columna suele ser el nombre del curso/área */
+td.col-nombre,
+th.col-nombre {
+  text-align: left;
+}
+
+/* Rayado suave de filas para lectura */
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* Destacar totales / promedios finales */
+tr.fila-total td,
+tr.fila-promedio td {
+  font-weight: bold;
+  border-top: 1px solid #b0b0b0;
+  background: #f0f0f0;
+}
+
+/* Bordes más finos y limpios alrededor de la tabla principal */
+.tabla-notas {
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Comentarios / observaciones */
+.bloque-comentarios {
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.bloque-comentarios .titulo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+/* Evitar cortes feos de tablas entre páginas */
+table,
+.tabla-notas,
+.bloque-comentarios {
+  page-break-inside: avoid;
+}
+
+/* Márgenes mínimos entre secciones de la libreta */
+.seccion-libreta {
+  margin-bottom: 8px;
+}

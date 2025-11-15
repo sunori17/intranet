@@ -1,0 +1,1 @@
+# apps.notas - Módulo de notas mensuales y exámenes bimestrales

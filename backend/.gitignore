@@ -23,5 +23,12 @@ staticfiles/
 *.log
 *.tmp
 *.bak
-__pycache__/
-*.pyc
+
+# UGEL uploads
+*.xlsx
+/tmp/
+uploads/
+
+# Test outputs
+*.pdf
+test_*.xlsx

@@ -1,16 +1,31 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+# Nota: dj_database_url se importa más abajo solo si es necesario
 
 # === Paths / Base ===
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # === Env ===
-load_dotenv()  # lee variables desde backend/.env (si existe)
+load_dotenv(BASE_DIR / ".env") # lee variables desde backend/.env (si existe)
 DEBUG = os.getenv("DEBUG", "True") == "True"
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,testserver").split(",") if h.strip()]
+
+# ←—— TOGGLE MOCK vs BD REAL ————————————————
+USE_FAKE_DATA = os.getenv("USE_FAKE_DATA", "True") == "True"
+# cambia a False cuando la BD real esté lista
+# ——————————————————————————————————————————————
+
+# === Base de Datos ===
+# Por ahora usamos SQLite para desarrollo/pruebas
+# TODO: Cambiar a PostgreSQL cuando esté disponible
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 # === Apps ===
 INSTALLED_APPS = [
@@ -23,9 +38,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Terceros
     "rest_framework",
-    # App del proyecto (usar AppConfig)
-    "apps.libretas",
-    #"libretas.apps.LibretasConfig",
+    # Apps del proyecto (reorganizado según SEGUNDO ENTREGABLE)
+    "apps.accesos",      # Autenticación, roles, permisos, auditoría
+    "apps.notas",        # Registro de notas mensuales y exámenes bimestrales
+    "apps.consolidacion", # Consolidación bimestral y reportes UGEL
+    "apps.libretas",     # Generación de PDFs y manejo de archivos Excel UGEL
+    "apps.bd_externa",   # Conexión y sincronización con MySQL externa
 ]
 
 MEDIA_URL = "/media/"
@@ -37,7 +55,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",    
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -63,15 +81,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# === Base de Datos ===
-# Para esta fase (sin Diana/MySQL), usa SQLite para que levante YA.
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 # === Static / Media ===
 STATIC_URL = "static/"

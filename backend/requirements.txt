@@ -1,11 +1,21 @@
-asgiref==3.10.0
-charset-normalizer==3.4.4
+# === Core Django ===
 Django==5.2.7
 djangorestframework==3.16.1
-et_xmlfile==2.0.0
-openpyxl==3.1.5
-pillow==12.0.0
-python-dotenv==1.1.1
-reportlab==4.4.4
+asgiref==3.10.0
 sqlparse==0.5.3
 tzdata==2025.2
+
+# === Base de datos ===
+mysql-connector-python==9.1.0    # Para conexión MySQL externa
+psycopg2-binary==2.9.7          # Para PostgreSQL (Supabase)
+
+# === Documentos y archivos ===
+WeasyPrint==62.3                 # Generación PDFs con HTML/CSS
+openpyxl==3.1.5                  # Manejo archivos Excel UGEL
+Pillow==12.0.0                   # Procesamiento de imágenes
+reportlab==4.4.4                 # Generación PDFs alternativos
+
+# === Utilidades ===
+python-dotenv==1.1.1             # Variables de entorno
+charset-normalizer==3.4.4        # Codificación de texto
+et_xmlfile==2.0.0                # Dependencia de openpyxl

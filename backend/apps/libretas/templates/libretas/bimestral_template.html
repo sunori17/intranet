@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{{ titulo }}</title>
+<style>
+  /* ... (mantener los estilos existentes) ... */
+</style>
+</head>
+<body>
+<section class="sheet">
+  <!-- Encabezado -->
+  <div class="header">
+    <img src="{{ logo_url|default:'/static/libretas/img/logo.png' }}" alt="Escudo IEP" />
+    <div class="school">
+      <h1>Institución Educativa Privada</h1>
+      <h2>"CRISTO REDENTOR DE NOCHETO"</h2>
+      <h3>EDUCACIÓN PRIMARIA · DIOS, AMOR, DISCIPLINA</h3>
+      <p class="small">MZ J – LT 8 PSJ Rasuñiti · Santa Anita · "AÑO DE LA RECUPERACIÓN Y CONSOLIDACIÓN DE LA ECONOMÍA PERUANA"</p>
+    </div>
+  </div>
+
+  <div class="title">{{ titulo }}</div>
+
+  <!-- Datos -->
+  <div class="grid-info">
+    <div class="ibox">
+      <div class="lbl">APELLIDOS Y NOMBRES</div>
+      <div class="val">{{ consolidado.alumno_nombre }}</div>
+    </div>
+    <div class="ibox">
+      <div class="lbl">GRADO</div>
+      <div class="val">{{ grado }}</div>
+    </div>
+    <div class="ibox">
+      <div class="lbl">BIMESTRE</div>
+      <div class="val">{{ bimestre }}° BIMESTRE</div>
+    </div>
+  </div>
+
+  <!-- Tabla de notas -->
+  <table>
+    <thead>
+      <tr>
+        <th>ÁREA</th>
+        <th>ASIGNATURA</th>
+        <th>NOTAS</th>
+        <th>PROMEDIO</th>
+        <th>LETRA</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for asignatura in consolidado.asignaturas %}
+      <tr>
+        <th class="area">{{ asignatura.area }}</th>
+        <td><a class="asig">{{ asignatura.nombre }}</a></td>
+        <td class="center">
+          {% for nota in asignatura.notas %}
+            {{ nota }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td class="center">{{ asignatura.promedio|floatformat:1 }}</td>
+        <td class="center promg">{{ asignatura.letra }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pie -->
+  <div class="footer-grid">
+    <div class="box">
+      <div class="lbl">RECOMENDACIONES DE LA TUTORA</div>
+      <div style="min-height:30mm">{{ consolidado.recomendaciones|default:"" }}</div>
+      <div class="firmas">
+        <div class="cell">
+          <div class="lbl">NOMBRE DE LA PROFESORA</div>
+          <div>{{ tutora_nombre }}</div>
+          <div class="sig"></div>
+          <div class="center" style="font-size:11px">FIRMA DE LA TUTORA</div>
+        </div>
+        <div class="cell"><div class="lbl">SELLO</div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="lbl">PROMEDIO FINAL</div>
+      <div class="big-number">{{ consolidado.promedio_general|floatformat:1 }}</div>
+      <div class="lbl">CALIFICACIÓN</div>
+      <div class="big-number">{{ consolidado.letra_general }}</div>
+    </div>
+
+    <div class="box">
+      <div class="lbl">PERÍODO</div>
+      <div>{{ bimestre }}° BIMESTRE 2025</div>
+    </div>
+  </div>
+
+  <div class="watermark">{{ nivel|upper }}</div>
+</section>
+</body>
+</html>
