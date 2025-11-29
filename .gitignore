@@ -1,21 +1,38 @@
-# Node dependencies
-node_modules/
+# ─── PYTHON ─────────────────────────────────────────────
+# Entornos virtuales
+env/
+venv/
+.venv/
 
-# Build output directory
+# Cachés y compilados
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
 dist/
+build/
+*.sqlite3
 
-# Vite local files
-.vite/
-
-# Environment variables
+# Archivos de entorno
 .env
 .env.local
 
-# Logs
+# ─── NODE / VITE / FRONTEND ─────────────────────────────
+node_modules/
+dist/
+.vite/
+
+# ─── LOGS ───────────────────────────────────────────────
+*.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# Editor and system files
+# ─── EDITOR / SISTEMA ───────────────────────────────────
 .DS_Store
 .vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
