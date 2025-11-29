@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules/
+
+# Build output directory
+dist/
+
+# Vite local files
+.vite/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor and system files
+.DS_Store
+.vscode/
