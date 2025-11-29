@@ -109,8 +109,9 @@ class ConsolidacionService:
             )
         
         # Calcular promedio final con regla 50-50
-        promedio_final = (promedio_mensual + examen_bimestral) / 2
-        promedio_final = promedio_final.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        suma = promedio_mensual + examen_bimestral
+        promedio_final = suma / 2
+        promedio_final = Decimal(str(promedio_final)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         
         # Crear o actualizar consolidado bimestral
         consolidado, created = ConsolidadoBimestral.objects.update_or_create(
@@ -182,8 +183,9 @@ class ConsolidacionService:
         if not promedios:
             promedio_final = Decimal('0.00')
         else:
-            promedio_final = sum(promedios) / len(promedios)
-            promedio_final = promedio_final.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+            suma_promedios = sum(promedios)
+            promedio_final = suma_promedios / len(promedios)
+            promedio_final = Decimal(str(promedio_final)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         
         # Calcular equivalencia literal
         letra = ConsolidacionService.calcular_equivalencia_letra(promedio_final)

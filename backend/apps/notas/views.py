@@ -44,7 +44,7 @@ class NotaMensualAPIView(APIView):
         serializer = NotaMensualSerializer(data=request.data)
         
         if serializer.is_valid():
-            data = serializer.validated_data
+            data = serializer.validated_data  # type: dict
             
             # Validar bloqueo por estado de cierre
             try:
@@ -184,7 +184,13 @@ class CierreMensualAPIView(APIView):
             # Actualizar estado y trazabilidad
             estado_cierre.estado = nuevo_estado
             estado_cierre.fecha_cierre = timezone.now()
-            estado_cierre.cerrado_por_id = usuario_id
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            try:
+                usuario = User.objects.get(id=usuario_id)
+                estado_cierre.cerrado_por = usuario
+            except User.DoesNotExist:
+                estado_cierre.cerrado_por = None
             estado_cierre.save()
             
             # Registro de auditoría

@@ -19,7 +19,7 @@ def calcular_promedio_mensual(notas: list) -> Decimal:
     # Convertir a Decimal si no lo son
     notas_decimal = [Decimal(str(nota)) for nota in notas]
     suma = sum(notas_decimal)
-    promedio = suma / len(notas_decimal)
+    promedio = Decimal(suma) / Decimal(len(notas_decimal))
     
     return promedio.quantize(PRECISION, rounding=ROUND_HALF_UP)
 
